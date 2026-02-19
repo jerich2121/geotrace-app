@@ -9,14 +9,17 @@
   "routes": [
     {
       "src": "/api/auth/login",
+      "methods": ["POST", "OPTIONS"],
       "dest": "/api/auth/login.js"
     },
     {
       "src": "/api/auth/me",
+      "methods": ["GET", "OPTIONS"],
       "dest": "/api/auth/me.js"
     },
     {
       "src": "/api/history",
+      "methods": ["GET", "POST", "DELETE", "OPTIONS"],
       "dest": "/api/history/index.js"
     }
   ]
