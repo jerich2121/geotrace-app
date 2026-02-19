@@ -1,0 +1,105 @@
+.history-empty {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  padding: 10px 0;
+}
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.history-list__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.history-list__check-all {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+.history-list__check-all input[type="checkbox"] {
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+.history-list__delete-btn {
+  font-size: 12px;
+  color: var(--color-error);
+  background: var(--color-error-bg);
+  border: 1px solid rgba(224, 82, 82, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  cursor: pointer;
+}
+.history-list__delete-btn:hover {
+  background: rgba(224, 82, 82, 0.2);
+}
+.history-list__items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.history-list__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s;
+}
+.history-list__item:hover {
+  border-color: var(--color-border-light);
+}
+.history-list__item--selected {
+  border-color: var(--color-accent);
+  background: var(--color-accent-muted);
+}
+.history-list__checkbox {
+  flex-shrink: 0;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+.history-list__ip-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0;
+  min-width: 0;
+}
+.history-list__ip {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-accent);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.history-list__ip-btn:hover .history-list__ip {
+  color: var(--color-accent-hover);
+}
+.history-list__label {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.history-list__time {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
