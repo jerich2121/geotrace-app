@@ -9,11 +9,11 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "postinstall": "prisma generate",
-    "build": "prisma db seed || echo 'Seed failed but continuing build'"
+    "build": "npx prisma generate --schema=src/prisma/schema.prisma && (npx prisma db seed || echo 'Seed failed but continuing build')"
   },
   "prisma": {
-    "seed": "node prisma/seed.js"
+    "seed": "node prisma/seed.js",
+    "schema": "src/prisma/schema.prisma"
   },
   "dependencies": {
     "@prisma/client": "^5.0.0",
