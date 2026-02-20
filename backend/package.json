@@ -9,8 +9,8 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "postinstall": "prisma generate",
-    "build": "prisma db seed || echo 'Seed failed but continuing build'"
+    "postinstall": "npx prisma generate",
+    "build": "npx prisma db seed || echo 'Seed failed but continuing build'"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
