@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { ipService, isValidIp, parseCoords } from '../services/ipService';
-import { historyService } from '../services/historyService';
-import GeoCard from '../components/GeoCard';
-import MapView from '../components/MapView';
-import HistoryList from '../components/HistoryList';
-import '../styles/HomePage.css';
+import React, { useState, useEffect, useCallback } from "react";
+import { useAuth } from "../context/AuthContext";
+import { ipService, isValidIp, parseCoords } from "../services/ipService";
+import { historyService } from "../services/historyService";
+import GeoCard from "../components/GeoCard";
+import MapView from "../components/MapView";
+import HistoryList from "../components/HistoryList";
+import "../styles/HomePage.css";
 
 const HomePage = () => {
   const { user, token, logout } = useAuth();
@@ -14,14 +14,15 @@ const HomePage = () => {
   const [currentGeoData, setCurrentGeoData] = useState(null);
   const [isMyIp, setIsMyIp] = useState(true);
 
-  const [ipInput, setIpInput] = useState('');
-  const [inputError, setInputError] = useState('');
+  const [ipInput, setIpInput] = useState("");
+  const [inputError, setInputError] = useState("");
   const [searchLoading, setSearchLoading] = useState(false);
 
   const [history, setHistory] = useState([]);
   const [historyLoading, setHistoryLoading] = useState(false);
 
   const [initialLoading, setInitialLoading] = useState(true);
+  const [panelOpen, setPanelOpen] = useState(false);
 
   const fetchMyGeo = useCallback(async () => {
     try {
@@ -57,15 +58,15 @@ const HomePage = () => {
   const handleSearch = async () => {
     const trimmed = ipInput.trim();
     if (!trimmed) {
-      setInputError('Please enter an IP address.');
+      setInputError("Please enter an IP address.");
       return;
     }
     if (!isValidIp(trimmed)) {
-      setInputError('Invalid IP address format.');
+      setInputError("Invalid IP address format.");
       return;
     }
 
-    setInputError('');
+    setInputError("");
     setSearchLoading(true);
     try {
       const data = await ipService.getGeoInfo(trimmed);
@@ -73,32 +74,40 @@ const HomePage = () => {
       setIsMyIp(false);
 
       // Save to history
-      await historyService.addHistory(token, trimmed, data.city ? `${data.city}, ${data.country}` : null);
+      await historyService.addHistory(
+        token,
+        trimmed,
+        data.city ? `${data.city}, ${data.country}` : null,
+      );
       await fetchHistory();
+
+      // Close panel on mobile after search
+      setPanelOpen(false);
     } catch (err) {
-      setInputError('Failed to fetch geolocation. Check the IP address.');
+      setInputError("Failed to fetch geolocation. Check the IP address.");
     } finally {
       setSearchLoading(false);
     }
   };
 
   const handleClear = () => {
-    setIpInput('');
-    setInputError('');
+    setIpInput("");
+    setInputError("");
     setCurrentGeoData(myGeoData);
     setIsMyIp(true);
   };
 
   const handleHistorySelect = async (ip) => {
     setIpInput(ip);
-    setInputError('');
+    setInputError("");
     setSearchLoading(true);
+    setPanelOpen(false);
     try {
       const data = await ipService.getGeoInfo(ip);
       setCurrentGeoData(data);
       setIsMyIp(false);
     } catch {
-      setInputError('Failed to fetch geolocation for selected history.');
+      setInputError("Failed to fetch geolocation for selected history.");
     } finally {
       setSearchLoading(false);
     }
@@ -114,7 +123,7 @@ const HomePage = () => {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSearch();
     }
   };
@@ -137,9 +146,7 @@ const HomePage = () => {
           <span className="home-header__name">GeoTrace</span>
         </div>
         <div className="home-header__user">
-          <span className="home-header__greeting">
-            {user?.name}
-          </span>
+          <span className="home-header__greeting">{user?.name}</span>
           <button className="home-header__logout" onClick={logout}>
             Sign out
           </button>
@@ -147,18 +154,24 @@ const HomePage = () => {
       </header>
 
       <main className="home-main">
-        <div className="home-main__left">
+        {/* Mobile overlay */}
+        <div
+          className={`mobile-overlay ${panelOpen ? "mobile-open" : ""}`}
+          onClick={() => setPanelOpen(false)}
+        />
+
+        <div className={`home-main__left ${panelOpen ? "mobile-open" : ""}`}>
           <div className="search-section">
             <h2 className="search-section__title">IP Lookup</h2>
             <div className="search-bar">
               <input
                 type="text"
-                className={`search-bar__input ${inputError ? 'search-bar__input--error' : ''}`}
+                className={`search-bar__input ${inputError ? "search-bar__input--error" : ""}`}
                 placeholder="Enter IP address (e.g. 8.8.8.8)"
                 value={ipInput}
                 onChange={(e) => {
                   setIpInput(e.target.value);
-                  if (inputError) setInputError('');
+                  if (inputError) setInputError("");
                 }}
                 onKeyDown={handleKeyDown}
               />
@@ -167,7 +180,7 @@ const HomePage = () => {
                 onClick={handleSearch}
                 disabled={searchLoading}
               >
-                {searchLoading ? '...' : 'Search'}
+                {searchLoading ? "..." : "Search"}
               </button>
               <button
                 className="search-bar__btn search-bar__btn--secondary"
@@ -177,9 +190,7 @@ const HomePage = () => {
                 Clear
               </button>
             </div>
-            {inputError && (
-              <p className="search-error">{inputError}</p>
-            )}
+            {inputError && <p className="search-error">{inputError}</p>}
           </div>
 
           <GeoCard data={currentGeoData} isMyIp={isMyIp} />
@@ -201,6 +212,14 @@ const HomePage = () => {
         <div className="home-main__right">
           <MapView coords={coords} label={currentGeoData?.ip} />
         </div>
+
+        {/* Mobile floating toggle button */}
+        <button
+          className="mobile-panel-toggle"
+          onClick={() => setPanelOpen((prev) => !prev)}
+        >
+          {panelOpen ? "✕ Close" : "◉ Lookup"}
+        </button>
       </main>
     </div>
   );

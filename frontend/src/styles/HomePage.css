@@ -164,3 +164,127 @@
   font-size: 13px;
   color: var(--color-text-muted);
 }
+
+/* Mobile panel toggle button */
+.mobile-panel-toggle {
+  display: none;
+}
+
+/* Mobile overlay */
+.mobile-overlay {
+  display: none;
+}
+
+/* ===========================
+   MOBILE RESPONSIVE
+   =========================== */
+@media (max-width: 768px) {
+  .home-header {
+    padding: 0 16px;
+    height: 52px;
+  }
+
+  .home-header__greeting {
+    display: none;
+  }
+
+  .home-main {
+    position: relative;
+    flex-direction: column;
+  }
+
+  /* Map takes full screen on mobile */
+  .home-main__right {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Left panel becomes a bottom sheet */
+  .home-main__left {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    flex: none;
+    width: 100%;
+    max-height: 75vh;
+    border-right: none;
+    border-top: 1px solid var(--color-border);
+    border-radius: 16px 16px 0 0;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .home-main__left.mobile-open {
+    transform: translateY(0);
+  }
+
+  /* Drag handle at top of sheet */
+  .home-main__left::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 4px;
+    background: var(--color-border-light);
+    border-radius: 2px;
+    margin: 10px auto 6px;
+    flex-shrink: 0;
+  }
+
+  /* Toggle button floating above map */
+  .mobile-panel-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 99;
+    background: var(--color-accent);
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(79, 142, 247, 0.4);
+    transition: background 0.15s, box-shadow 0.15s;
+  }
+
+  .mobile-panel-toggle:hover {
+    background: var(--color-accent-hover);
+  }
+
+  /* Overlay behind the sheet */
+  .mobile-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .mobile-overlay.mobile-open {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+@media (max-width: 400px) {
+  .search-bar {
+    flex-wrap: wrap;
+  }
+
+  .search-bar__btn--secondary {
+    display: none;
+  }
+}
