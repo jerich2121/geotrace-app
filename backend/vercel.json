@@ -1,17 +1,9 @@
 {
   "version": 2,
+  "buildCommand": "npm run build",
   "rewrites": [
-    {
-      "source": "/api/auth/login",
-      "destination": "/api/auth/login.js"
-    },
-    {
-      "source": "/api/auth/me",
-      "destination": "/api/auth/me.js"
-    },
-    {
-      "source": "/api/history",
-      "destination": "/api/history/index.js"
-    }
+    { "source": "/api/auth/login", "destination": "/api/auth/login.js" },
+    { "source": "/api/auth/me", "destination": "/api/auth/me.js" },
+    { "source": "/api/history", "destination": "/api/history/index.js" }
   ]
 }
