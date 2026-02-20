@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const prisma = new PrismaClient();
 
 async function main() {
+  console.log('🌱 Starting database seeding...');
+  
   // Use env variable or fallback for security
   const adminPassword = process.env.ADMIN_PASSWORD || 'password123';
   const hashedPassword = await bcrypt.hash(adminPassword, 10);
@@ -22,10 +24,13 @@ async function main() {
 }
 
 main()
-  .catch((e) => {
-    console.error('❌ Seeding error:', e);
-    process.exit(1);
-  })
-  .finally(async () => {
+  .then(async () => {
     await prisma.$disconnect();
+    console.log('🚀 Seeding finished successfully.');
+    process.exit(0); // This tells Vercel the build step is DONE
+  })
+  .catch(async (e) => {
+    console.error('❌ Seeding error:', e);
+    await prisma.$disconnect();
+    process.exit(1); // Exit with error code if it fails
   });
