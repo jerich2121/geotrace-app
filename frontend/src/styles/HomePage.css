@@ -191,13 +191,16 @@
   .home-main {
     position: relative;
     flex-direction: column;
+    overflow: visible;
   }
 
   /* Map takes full screen on mobile */
   .home-main__right {
     flex: 1;
     width: 100%;
-    height: 100%;
+    min-height: 0;
+    position: relative;
+    z-index: 1;
   }
 
   /* Left panel becomes a bottom sheet */
@@ -238,27 +241,34 @@
   .mobile-panel-toggle {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     position: fixed;
-    bottom: 20px;
+    bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 99;
-    background: var(--color-accent);
+    background: linear-gradient(135deg, #4f8ef7, #6ba3ff);
     color: #fff;
     border: none;
-    border-radius: 24px;
-    padding: 10px 20px;
-    font-size: 13px;
-    font-weight: 600;
+    border-radius: 32px;
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 700;
     font-family: var(--font-sans);
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(79, 142, 247, 0.4);
-    transition: background 0.15s, box-shadow 0.15s;
+    box-shadow: 0 6px 24px rgba(79, 142, 247, 0.55), 0 2px 8px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    transition: transform 0.15s, box-shadow 0.15s;
   }
 
   .mobile-panel-toggle:hover {
-    background: var(--color-accent-hover);
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 8px 32px rgba(79, 142, 247, 0.7), 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .mobile-panel-toggle:active {
+    transform: translateX(-50%) scale(0.97);
   }
 
   /* Overlay behind the sheet */
