@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "description": "GeoTrace backend API",
   "main": "src/index.js",
-"scripts": {
-  "start": "node src/index.js",
-  "dev": "nodemon src/index.js",
-  "build": "echo 'build complete'"
-},
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "build": "echo 'build complete'",
+    "vercel-build": "prisma generate"
+  },
   "prisma": {
     "seed": "node prisma/seed.js"
   },
