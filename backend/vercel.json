@@ -1,6 +1,7 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "buildCommand": "node node_modules/prisma/build/index.js generate --schema=src/prisma/schema.prisma && (node node_modules/prisma/build/index.js db seed || echo 'Seed failed but continuing build')",
   "rewrites": [
     { "source": "/api/auth/login", "destination": "/api/auth/login.js" },
     { "source": "/api/auth/me", "destination": "/api/auth/me.js" },

@@ -8,8 +8,7 @@
   },
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
-    "build": "npx prisma generate --schema=src/prisma/schema.prisma && (npx prisma db seed || echo 'Seed failed but continuing build')"
+    "dev": "nodemon src/index.js"
   },
   "prisma": {
     "seed": "node prisma/seed.js",
