@@ -4,7 +4,9 @@ const bcrypt = require('bcryptjs');
 const prisma = new PrismaClient();
 
 async function main() {
-  const hashedPassword = await bcrypt.hash('password123', 10);
+  // Use env variable or fallback for security
+  const adminPassword = process.env.ADMIN_PASSWORD || 'password123';
+  const hashedPassword = await bcrypt.hash(adminPassword, 10);
 
   const user = await prisma.user.upsert({
     where: { email: 'admin@example.com' },
@@ -16,12 +18,12 @@ async function main() {
     },
   });
 
-  console.log('Seeded user:', user.email);
+  console.log('✅ Seeded user:', user.email);
 }
 
 main()
   .catch((e) => {
-    console.error(e);
+    console.error('❌ Seeding error:', e);
     process.exit(1);
   })
   .finally(async () => {

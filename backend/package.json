@@ -9,8 +9,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "build": "echo 'build complete'",
-    "vercel-build": "prisma generate"
+    "build": "prisma generate && prisma db seed"
   },
   "prisma": {
     "seed": "node prisma/seed.js"

@@ -2,24 +2,21 @@
   "version": 2,
   "functions": {
     "api/**/*.js": {
-      "runtime": "@vercel/node@3.2.9"
+      "runtime": "nodejs20.x"
     }
   },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/auth/login",
-      "methods": ["POST", "OPTIONS"],
-      "dest": "/api/auth/login.js"
+      "source": "/api/auth/login",
+      "destination": "/api/auth/login.js"
     },
     {
-      "src": "/api/auth/me",
-      "methods": ["GET", "OPTIONS"],
-      "dest": "/api/auth/me.js"
+      "source": "/api/auth/me",
+      "destination": "/api/auth/me.js"
     },
     {
-      "src": "/api/history",
-      "methods": ["GET", "POST", "DELETE", "OPTIONS"],
-      "dest": "/api/history/index.js"
+      "source": "/api/history",
+      "destination": "/api/history/index.js"
     }
   ]
 }
